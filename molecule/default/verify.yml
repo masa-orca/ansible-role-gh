@@ -1,0 +1,30 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Gather the package facts
+      become: true
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Check that git package installed
+      ansible.builtin.assert:
+        that:
+          - "'gh' in ansible_facts.packages"
+
+    # - ansible.builtin.command: git config --system --list
+    #   register: get_git_config_system
+    #   changed_when: false
+
+    # - ansible.builtin.command: git config --global --list
+    #   register: get_git_config_global
+    #   changed_when: false
+
+    # - name: Check git configs
+    #   ansible.builtin.assert:
+    #     that:
+    #       - "'core.filemode=false' in get_git_config_system.stdout_lines"
+    #       - "'core.gitproxy=ssh' in get_git_config_global.stdout_lines"
