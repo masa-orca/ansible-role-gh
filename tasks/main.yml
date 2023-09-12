@@ -17,14 +17,35 @@
   when:
     - ansible_facts.distribution == "Ubuntu"
 
-- name: Set editor
-  ansible.builtin.command: "gh config set editor '{{ gh_config_editor }}'"
+- name: Config editor
   when: gh_config_editor | length > 1
+  block:
+    - name: Get editor
+      ansible.builtin.command: gh config get editor
+      register: get_editor
 
-- name: Set git_protocol
-  ansible.builtin.command: "gh config set git_protocol '{{ gh_config_git_protocol }}'"
+    - name: Set editor
+      ansible.builtin.command: "gh config set editor '{{ gh_config_editor }}'"
+      when: get_editor.stdout != gh_config_editor
+
+- name: Config git_protocol
   when: gh_config_git_protocol | length > 1
+  block:
+    - name: Get git_protocol
+      ansible.builtin.command: gh config get git_protocol
+      register: get_git_protocol
 
-- name: Set prompt
-  ansible.builtin.command: "gh config set prompt '{{ gh_config_prompt }}'"
+    - name: Set git_protocol
+      ansible.builtin.command: "gh config set git_protocol '{{ gh_config_git_protocol }}'"
+      when: get_git_protocol.stdout != gh_config_git_protocol
+
+- name: Config prompt
   when: gh_config_prompt | length > 1
+  block:
+    - name: Get prompt
+      ansible.builtin.command: gh config get prompt
+      register: get_prompt
+
+    - name: Set prompt
+      ansible.builtin.command: "gh config set prompt '{{ gh_config_prompt }}'"
+      when: get_prompt.stdout != gh_config_prompt
