@@ -19,9 +19,9 @@
       register: get_gh_config
       changed_when: false
 
-    - debug: var=get_gh_config
-    # - name: Check gh configs
-    #   ansible.builtin.assert:
-    #     that:
-    #       - "'core.filemode=false' in get_gh_config.stdout_lines"
-    #       - "'core.gitproxy=ssh' in get_gh_config.stdout_lines"
+    - name: Check gh configs
+      ansible.builtin.assert:
+        that:
+          - "'git_protocol=ssh' in get_gh_config.stdout_lines"
+          - "'editor=vim' in get_gh_config.stdout_lines"
+          - "'prompt=disabled' in get_gh_config.stdout_lines"
