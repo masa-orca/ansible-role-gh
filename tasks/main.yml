@@ -16,3 +16,15 @@
     file: Ubuntu.yml
   when:
     - ansible_facts.distribution == "Ubuntu"
+
+- name: Set editor
+  ansible.builtin.command: "gh config set editor '{{ gh_config_editor }}'"
+  when: gh_config_editor | length > 1
+
+- name: Set git_protocol
+  ansible.builtin.command: "gh config set git_protocol '{{ gh_config_git_protocol }}'"
+  when: gh_config_git_protocol | length > 1
+
+- name: Set prompt
+  ansible.builtin.command: "gh config set prompt '{{ gh_config_prompt }}'"
+  when: gh_config_prompt | length > 1
