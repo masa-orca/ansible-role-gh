@@ -22,6 +22,7 @@
   block:
     - name: Get editor
       ansible.builtin.command: gh config get editor
+      changed_when: false
       register: get_editor
 
     - name: Set editor
@@ -33,6 +34,7 @@
   block:
     - name: Get git_protocol
       ansible.builtin.command: gh config get git_protocol
+      changed_when: false
       register: get_git_protocol
 
     - name: Set git_protocol
@@ -44,6 +46,7 @@
   block:
     - name: Get prompt
       ansible.builtin.command: gh config get prompt
+      changed_when: false
       register: get_prompt
 
     - name: Set prompt
